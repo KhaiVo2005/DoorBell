@@ -1,0 +1,6 @@
+services:
+  doorbell.api:
+    image: ${DOCKER_REGISTRY-}doorbellapi
+    build:
+      context: .
+      dockerfile: DoorBell/Dockerfile

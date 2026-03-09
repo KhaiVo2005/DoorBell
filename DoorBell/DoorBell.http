@@ -1,0 +1,6 @@
+@DoorBell_HostAddress = http://localhost:5077
+
+GET {{DoorBell_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
