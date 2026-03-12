@@ -24,6 +24,11 @@ namespace DoorBell.Infrastructure.Respositories
             return device;
         }
 
+        public async Task<List<Device>> GetAllByUser(Guid userId)
+        {
+            return await _context.Devices.Where(d => d.UserId == userId).ToListAsync();
+        }
+
         public async Task<bool> Delete(Guid id)
         {
             var device = await _context.Devices.FindAsync(id);

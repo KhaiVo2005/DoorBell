@@ -73,6 +73,7 @@ builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetUsecas
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.CreateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.UpdateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.DeleteUsecase>();
+builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetAllByUserUsecase>();
 
 builder.Services.AddScoped<IDoorBellEvent, DoorBellEventRepository>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.GetAllUsecase>();
@@ -80,6 +81,7 @@ builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.Ge
 builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.CreateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.UpdateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.DeleteUsecase>();
+builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.GetAllByUserUsecase>();
 
 builder.Services.AddScoped<ICallSession, CallSessionRespository>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.CallSessionUsecase.GetAllUsecase>();

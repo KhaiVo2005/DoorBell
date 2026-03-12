@@ -1,27 +1,51 @@
 ﻿using DoorBell.Application.DTOs.DeviceDTOs;
 using DoorBell.Application.Usecases.DeviceUsecase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DoorBell.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DeviceController : ControllerBase
     {
+        GetAllByUserUsecase _getAllByUser;
         GetUsecase _get;
         GetAllUsecase _getAll;
         CreateUsecase _create;
         UpdateUsecase _update;
         DeleteUsecase _delete;
 
-        public DeviceController(GetUsecase get, GetAllUsecase getAll, CreateUsecase create, UpdateUsecase update, DeleteUsecase delete)
+        public DeviceController(
+            GetUsecase get, 
+            GetAllByUserUsecase getAllByUser,
+            GetAllUsecase getAll, 
+            CreateUsecase create, 
+            UpdateUsecase update, 
+            DeleteUsecase delete)
         {
             _get = get;
+            _getAllByUser = getAllByUser;
             _getAll = getAll;
             _create = create;
             _update = update;
             _delete = delete;
+        }
+
+        [HttpGet("user")]
+        public async Task<IActionResult> GetAllByUser()
+        {
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                return BadRequest("User ID claim not found");
+
+            var userId = Guid.Parse(userIdClaim.Value);
+            var result = await _getAllByUser.Execute(userId);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

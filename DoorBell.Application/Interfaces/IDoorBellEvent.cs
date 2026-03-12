@@ -10,6 +10,7 @@ namespace DoorBell.Application.Interfaces
     public interface IDoorBellEvent
     {
         Task<List<DoorBellEvent>> GetAll();
+        Task<List<DoorBellEvent>> GetByUser(Guid userId);
         Task<DoorBellEvent> GetById(Guid id);
         Task<DoorBellEvent> Create(DoorBellEvent doorBellEvent);
         Task<DoorBellEvent> Update(DoorBellEvent doorBellEvent);

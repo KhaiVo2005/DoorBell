@@ -17,6 +17,14 @@ namespace DoorBell.Infrastructure.Respositories
         {
             _context = context;
         }
+
+        public async Task<List<DoorBellEvent>> GetByUser(Guid userId)
+        {
+            return await _context.DoorBellEvents
+                .Include(e => e.Device)
+                .Where(e => e.Device.UserId == userId)
+                .ToListAsync();
+        }
         public async Task<DoorBellEvent> Create(DoorBellEvent doorBellEvent)
         {
             await _context.DoorBellEvents.AddAsync(doorBellEvent);
