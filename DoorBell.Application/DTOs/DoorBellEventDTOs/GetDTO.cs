@@ -15,5 +15,6 @@ namespace DoorBell.Application.DTOs.DoorBellEventDTOs
         public string EventType { get; set; }
         public bool IsView { get; set; }
         public string ImageUrl { get; set; }
+        public Device Device { get; set; }
     }
 }
