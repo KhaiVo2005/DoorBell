@@ -118,7 +118,6 @@ builder.WebHost.UseUrls($"http://*:{port}");
 // Configure Entity Framework Core with PostgreSQL
 builder.Services.AddDbContext<DoorBellDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
