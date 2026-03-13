@@ -38,21 +38,19 @@ namespace DoorBell.Application.Usecases.DoorBellEventUsecase
         {
             var entity = _mapper.Map<DoorBellEvent>(createDTO);
             var createdEntity = await _entity.Create(entity);
-
-            var device = await _device.GetById(createdEntity.DeviceId);
-
-            CallSession call = new CallSession
+            if (createdEntity.EventType == "isringing")
             {
-                DeviceId = createdEntity.DeviceId,
-                UserId = device.UserId, 
-                StartTime = DateTime.UtcNow,
-                Status = "Calling"
-            };
 
-            var createdCall = await _call.Create(call);
+                var device = await _device.GetById(createdEntity.DeviceId);
 
-            if (createdCall.Status == "isringing")
-            {
+                CallSession call = new CallSession
+                {
+                    DeviceId = createdEntity.DeviceId,
+                    UserId = device.UserId, 
+                    StartTime = DateTime.UtcNow,
+                    Status = "Calling"
+                };
+                var createdCall = await _call.Create(call);
                 await _hub.Clients.User(device.UserId.ToString())
                     .SendAsync("IncomingCall", new
                     {
