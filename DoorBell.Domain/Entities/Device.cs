@@ -12,7 +12,6 @@ namespace DoorBell.Domain.Entities
         public string Name { get; set; }
         public string Type { get; set; }
         public Guid? ParentDeviceId { get; set; }
-        public string Code { get; set; }
         public string ApiKey { get; set; }
         public string Location { get; set; }
         public DateTime CreatedAt { get; set; }
