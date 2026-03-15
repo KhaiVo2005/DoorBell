@@ -23,6 +23,8 @@ namespace DoorBell.Application.Usecases.DeviceUsecase
         public async Task<GetDTO> Execute(CreateDTO createDTO)
         {
             var entity = _mapper.Map<Domain.Entities.Device>(createDTO);
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.UpdatedAt = DateTime.UtcNow;
             var createdEntity = await _entity.Create(entity);
             return _mapper.Map<GetDTO>(createdEntity);
         }
