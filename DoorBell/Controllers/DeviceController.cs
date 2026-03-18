@@ -18,14 +18,16 @@ namespace DoorBell.API.Controllers
         CreateUsecase _create;
         UpdateUsecase _update;
         DeleteUsecase _delete;
+        GetByApiKeyUsecase _getByApikey;
 
         public DeviceController(
-            GetUsecase get, 
+            GetUsecase get,
             GetAllByUserUsecase getAllByUser,
-            GetAllUsecase getAll, 
-            CreateUsecase create, 
-            UpdateUsecase update, 
-            DeleteUsecase delete)
+            GetAllUsecase getAll,
+            CreateUsecase create,
+            UpdateUsecase update,
+            DeleteUsecase delete,
+            GetByApiKeyUsecase getByApiKey)
         {
             _get = get;
             _getAllByUser = getAllByUser;
@@ -33,6 +35,15 @@ namespace DoorBell.API.Controllers
             _create = create;
             _update = update;
             _delete = delete;
+            _getByApikey = getByApiKey;
+        }
+
+        [HttpGet("{apiKey}")]
+        public IActionResult GetByApiKey(string apiKey)
+        {
+            var result = _getByApikey.Execute(apiKey).Result;
+            if (result == null || result.Count == 0) return NotFound();
+            return Ok(result);
         }
 
         [HttpGet("user")]
@@ -48,7 +59,7 @@ namespace DoorBell.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _get.Execute(id);

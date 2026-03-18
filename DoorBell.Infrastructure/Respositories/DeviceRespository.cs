@@ -29,6 +29,11 @@ namespace DoorBell.Infrastructure.Respositories
             return await _context.Devices.Where(d => d.UserId == userId).ToListAsync();
         }
 
+        public async Task<List<Device>> GetByApiKey(string apikey)
+        {
+            return await _context.Devices.Where(d => d.ApiKey == apikey).ToListAsync();
+        }
+
         public async Task<bool> Delete(Guid id)
         {
             var device = await _context.Devices.FindAsync(id);

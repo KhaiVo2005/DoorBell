@@ -15,5 +15,6 @@ namespace DoorBell.Application.Interfaces
         Task<Device> Create(Device device);
         Task<Device> Update(Device device);
         Task<bool> Delete(Guid id);
+        Task<List<Device>> GetByApiKey(string apikey);
     }
 }

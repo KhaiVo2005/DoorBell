@@ -74,6 +74,7 @@ builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.CreateUse
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.UpdateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.DeleteUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetAllByUserUsecase>();
+builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetByApiKeyUsecase>();
 
 builder.Services.AddScoped<IDoorBellEvent, DoorBellEventRepository>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.GetAllUsecase>();
