@@ -82,7 +82,7 @@ namespace DoorBell.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromForm] UpdateDTO request)
+        public async Task<IActionResult> Update(Guid id, UpdateDTO request)
         {
             var result = await _update.Execute(id, request);
             return Ok(result);
