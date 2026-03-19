@@ -23,6 +23,7 @@ namespace DoorBell.Application.Usecases.DeviceUsecase
         public async Task<GetDTO> Execute(Guid id, UpdateDTO entityDTO)
         {
             var entity = await _entity.GetById(id);
+            entity.UpdatedAt = DateTime.UtcNow;
             if (entity == null)
                 throw new Exception("User not found");
             _mapper.Map(entityDTO, entity);
