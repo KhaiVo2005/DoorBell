@@ -19,6 +19,7 @@ namespace DoorBell.API.Controllers
         UpdateUsecase _update;
         DeleteUsecase _delete;
         GetByApiKeyUsecase _getByApikey;
+        GetByParent _getByParent;
 
         public DeviceController(
             GetUsecase get,
@@ -27,7 +28,8 @@ namespace DoorBell.API.Controllers
             CreateUsecase create,
             UpdateUsecase update,
             DeleteUsecase delete,
-            GetByApiKeyUsecase getByApiKey)
+            GetByApiKeyUsecase getByApiKey,
+            GetByParent getByParent)
         {
             _get = get;
             _getAllByUser = getAllByUser;
@@ -36,6 +38,7 @@ namespace DoorBell.API.Controllers
             _update = update;
             _delete = delete;
             _getByApikey = getByApiKey;
+            _getByParent = getByParent;
         }
 
         [HttpGet("{apiKey}")]
@@ -56,6 +59,13 @@ namespace DoorBell.API.Controllers
 
             var userId = Guid.Parse(userIdClaim.Value);
             var result = await _getAllByUser.Execute(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("parent/{parentId}")]
+        public async Task<IActionResult> GetByParent(string parentId)
+        {
+            var result = await _getByParent.Execute(parentId);
             return Ok(result);
         }
 

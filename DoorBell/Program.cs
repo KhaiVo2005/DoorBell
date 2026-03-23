@@ -70,6 +70,7 @@ builder.Services.AddScoped<GetByMailUsecase>();
 builder.Services.AddScoped<IDevice, DeviceRespository>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetAllUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetUsecase>();
+builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetByParent>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.CreateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.UpdateUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.DeleteUsecase>();
