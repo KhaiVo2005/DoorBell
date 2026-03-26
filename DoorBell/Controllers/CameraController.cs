@@ -17,7 +17,7 @@ namespace DoorBell.API.Controllers
         }
 
         [HttpPost("detect")]
-        public async Task<IActionResult> Detect(IFormFile file, string apiKey)
+        public async Task<IActionResult> Detect([FromForm] IFormFile file, [FromForm] string apiKey)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file");
