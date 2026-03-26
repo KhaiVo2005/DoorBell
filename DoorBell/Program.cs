@@ -3,8 +3,10 @@ using DoorBell.Application.Hubs;
 using DoorBell.Application.Interfaces;
 using DoorBell.Application.Mapping;
 using DoorBell.Application.Services;
+using DoorBell.Application.Usecases.CameraUsecase;
 using DoorBell.Application.Usecases.UserUsecase;
 using DoorBell.Domain.Entities;
+using DoorBell.Infrastructure.ExternalServices;
 using DoorBell.Infrastructure.Persistent;
 using DoorBell.Infrastructure.Respositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -93,6 +95,10 @@ builder.Services.AddScoped<DoorBell.Application.Usecases.CallSessionUsecase.Upda
 builder.Services.AddScoped<DoorBell.Application.Usecases.CallSessionUsecase.DeleteUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.CallSessionUsecase.AcceptUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.CallSessionUsecase.RejectedUsecase>();
+
+builder.Services.AddScoped<IDetectPersonService, OnnxDetectService>();
+builder.Services.AddScoped<DetectUsecase>();
+builder.Services.AddScoped<DetectPersonUsecase>();
 
 // AutoMapper configuration
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);

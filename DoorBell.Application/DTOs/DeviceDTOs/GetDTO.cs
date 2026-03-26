@@ -19,6 +19,7 @@ namespace DoorBell.Application.DTOs.DeviceDTOs
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string Status { get; set; }
+        public bool? HasPeople { get; set; }
         public Guid UserId { get; set; }
     }
 }

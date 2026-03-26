@@ -18,6 +18,7 @@ namespace DoorBell.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string Status { get; set; }
+        public bool? HasPeople { get; set; }
         // Foreign key
         public Guid UserId { get; set; }
         // Navigation property

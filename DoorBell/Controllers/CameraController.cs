@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DoorBell.Application.Usecases.CameraUsecase;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoorBell.API.Controllers
@@ -7,8 +8,16 @@ namespace DoorBell.API.Controllers
     [ApiController]
     public class CameraController : ControllerBase
     {
+        DetectUsecase _detectUsecase;
+        DetectPersonUsecase _detectPersonUsecase;
+        public CameraController(DetectUsecase detectUsecase, DetectPersonUsecase detectPersonUsecase)
+        {
+            _detectUsecase = detectUsecase;
+            _detectPersonUsecase = detectPersonUsecase;
+        }
+
         [HttpPost("detect")]
-        public async Task<IActionResult> Detect(IFormFile file)
+        public async Task<IActionResult> Detect(IFormFile file, string apiKey)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file");
@@ -23,7 +32,16 @@ namespace DoorBell.API.Controllers
             //    await file.CopyToAsync(stream);
             //}
 
-            bool hasPeople = new Random().Next(0, 2) == 1;
+            byte[] imageBytes;
+            using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms);
+                imageBytes = ms.ToArray();
+            }
+
+            bool hasPeople = _detectPersonUsecase.Execute(imageBytes);
+
+            var result = await _detectUsecase.Execute(apiKey, hasPeople);
 
             return Ok(new
             {
