@@ -87,12 +87,14 @@ namespace DoorBell.Infrastructure.ExternalServices
                 float personScore = output[0, 4, i];
 
                 // Nếu điểm tự tin lớn hơn 40% (bạn có thể chỉnh 0.3f hoặc 0.5f tùy ý)
-                if (personScore > 0.3f)
+                if (personScore > 0.2f)
                 {
                     Console.WriteLine($"✅ PERSON detected with confidence: {personScore * 100}%");
                     return true;
                 }
-                person = personScore;
+
+                if(personScore > person)
+                    person = personScore;
             }
 
             Console.WriteLine($"❌ No person detected with confidence: {person * 100}%");
