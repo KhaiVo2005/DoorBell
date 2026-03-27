@@ -52,7 +52,9 @@ namespace DoorBell.Infrastructure.ExternalServices
             {
                 x.Resize(new ResizeOptions
                 {
-                    Size = new Size(size, size)
+                    Size = new Size(size, size),
+                    Mode = ResizeMode.Pad,
+                    PadColor = Color.Black
                 });
             });
 

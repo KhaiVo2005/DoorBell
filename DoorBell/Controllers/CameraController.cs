@@ -17,9 +17,9 @@ namespace DoorBell.API.Controllers
         }
 
         [HttpPost("detect")]
-        public async Task<IActionResult> Detect([FromForm] IFormFile file, [FromForm] string apiKey)
+        public async Task<IActionResult> Detect([FromForm] DetectRequestDto request)
         {
-            if (file == null || file.Length == 0)
+            if (request.File == null || request.File.Length == 0)
                 return BadRequest("No file");
 
             Console.WriteLine("Received image");
@@ -35,18 +35,24 @@ namespace DoorBell.API.Controllers
             byte[] imageBytes;
             using (var ms = new MemoryStream())
             {
-                await file.CopyToAsync(ms);
+                await request.File.CopyToAsync(ms);
                 imageBytes = ms.ToArray();
             }
 
             bool hasPeople = _detectPersonUsecase.Execute(imageBytes);
 
-            var result = await _detectUsecase.Execute(apiKey, hasPeople);
+            var result = await _detectUsecase.Execute(request.ApiKey, hasPeople);
 
             return Ok(new
             {
                 hasPeople = hasPeople
             });
         }
+    }
+
+    public class DetectRequestDto
+    {
+        public IFormFile File { get; set; }
+        public string ApiKey { get; set; }
     }
 }
