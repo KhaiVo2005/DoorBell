@@ -79,41 +79,26 @@ namespace DoorBell.Infrastructure.ExternalServices
         private bool ParseOutput(Tensor<float> output)
         {
             int numBoxes = output.Dimensions[2]; // 8400
-            int numClasses = 80;
-
-            float bestScore = 0;
-            int bestClass = -1;
 
             for (int i = 0; i < numBoxes; i++)
             {
-                float maxScore = 0;
-                int classId = -1;
+                float obj = output[0, 4, i];
 
-                for (int c = 0; c < numClasses; c++)
+                if (obj < 0.1f)
+                    continue;
+
+                float personCls = output[0, 4, i];
+
+                float score = obj * personCls;
+
+                if (score > 0.3f)
                 {
-                    float score = output[0, 4 + c, i]; // ✅ đúng
-
-                    if (score > maxScore)
-                    {
-                        maxScore = score;
-                        classId = c;
-                    }
-                }
-
-                if (maxScore > bestScore)
-                {
-                    bestScore = maxScore;
-                    bestClass = classId;
-                }
-
-                if (classId == 0 && maxScore > 0.3f)
-                {
-                    Console.WriteLine($"✅ PERSON detected: {maxScore}");
+                    Console.WriteLine($"✅ PERSON detected: {score}");
                     return true;
                 }
             }
 
-            Console.WriteLine($"❌ No person. Best class: {bestClass}, score: {bestScore}");
+            Console.WriteLine("❌ No person");
             return false;
         }
     }
