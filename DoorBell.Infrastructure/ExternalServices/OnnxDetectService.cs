@@ -79,6 +79,7 @@ namespace DoorBell.Infrastructure.ExternalServices
         private bool ParseOutput(Tensor<float> output)
         {
             int numBoxes = output.Dimensions[2]; // 8400
+            float person = 0;
 
             for (int i = 0; i < numBoxes; i++)
             {
@@ -91,9 +92,10 @@ namespace DoorBell.Infrastructure.ExternalServices
                     Console.WriteLine($"✅ PERSON detected with confidence: {personScore * 100}%");
                     return true;
                 }
+                person = personScore;
             }
 
-            Console.WriteLine("❌ No person detected with confidence: {personScore * 100}%");
+            Console.WriteLine($"❌ No person detected with confidence: {person * 100}%");
             return false;
         }
     }
