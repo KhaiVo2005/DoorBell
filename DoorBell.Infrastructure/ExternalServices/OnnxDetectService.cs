@@ -82,23 +82,18 @@ namespace DoorBell.Infrastructure.ExternalServices
 
             for (int i = 0; i < numBoxes; i++)
             {
-                float obj = output[0, 4, i];
+                // Lấy trực tiếp xác suất của class 0 (Person)
+                float personScore = output[0, 4, i];
 
-                if (obj < 0.1f)
-                    continue;
-
-                float personCls = output[0, 4, i];
-
-                float score = obj * personCls;
-
-                if (score > 0.3f)
+                // Nếu điểm tự tin lớn hơn 40% (bạn có thể chỉnh 0.3f hoặc 0.5f tùy ý)
+                if (personScore > 0.3f)
                 {
-                    Console.WriteLine($"✅ PERSON detected: {score}");
+                    Console.WriteLine($"✅ PERSON detected with confidence: {personScore * 100}%");
                     return true;
                 }
             }
 
-            Console.WriteLine("❌ No person");
+            Console.WriteLine("❌ No person detected with confidence: {personScore * 100}%");
             return false;
         }
     }
