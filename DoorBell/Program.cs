@@ -20,6 +20,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddSwaggerGen(options =>
 {
@@ -78,6 +81,7 @@ builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.UpdateUse
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.DeleteUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetAllByUserUsecase>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.GetByApiKeyUsecase>();
+builder.Services.AddScoped<DoorBell.Application.Usecases.DeviceUsecase.CheckCameraUseCase>();
 
 builder.Services.AddScoped<IDoorBellEvent, DoorBellEventRepository>();
 builder.Services.AddScoped<DoorBell.Application.Usecases.DoorBellEventUsecase.GetAllUsecase>();

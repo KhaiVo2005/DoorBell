@@ -11,6 +11,7 @@ namespace DoorBell.Application.Interfaces
     {
         Task<List<Device>> GetAll();
         Task<List<Device>> GetAllByUser(Guid userId);
+        Task<bool> AnyRootCameraHasPeople(Guid userId);
         Task<Device> GetById(Guid id);
         Task<Device> Create(Device device);
         Task<Device> Update(Device device);

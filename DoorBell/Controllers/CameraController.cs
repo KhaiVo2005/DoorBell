@@ -1,4 +1,5 @@
 ﻿using DoorBell.Application.Usecases.CameraUsecase;
+using DoorBell.Application.Usecases.DeviceUsecase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,15 @@ namespace DoorBell.API.Controllers
     {
         DetectUsecase _detectUsecase;
         DetectPersonUsecase _detectPersonUsecase;
-        public CameraController(DetectUsecase detectUsecase, DetectPersonUsecase detectPersonUsecase)
+        CheckCameraUseCase _checkPress;
+        public CameraController(
+            DetectUsecase detectUsecase, 
+            DetectPersonUsecase detectPersonUsecase,
+            CheckCameraUseCase checkCameraUseCase)
         {
             _detectUsecase = detectUsecase;
             _detectPersonUsecase = detectPersonUsecase;
+            _checkPress = checkCameraUseCase;
         }
 
         [HttpPost("detect")]
@@ -23,14 +29,6 @@ namespace DoorBell.API.Controllers
                 return BadRequest("No file");
 
             Console.WriteLine("Received image");
-
-            //var path = Path.Combine("uploads", $"{Guid.NewGuid()}.jpg");
-            //Directory.CreateDirectory("uploads");
-
-            //using (var stream = new FileStream(path, FileMode.Create))
-            //{
-            //    await file.CopyToAsync(stream);
-            //}
 
             byte[] imageBytes;
             using (var ms = new MemoryStream())
@@ -47,6 +45,12 @@ namespace DoorBell.API.Controllers
             {
                 hasPeople = hasPeople
             });
+        }
+
+        [HttpPost("press")]
+        public async Task<bool> Press([FromBody] string apiKey)
+        {
+            return await _checkPress.Execute(apiKey);
         }
     }
 

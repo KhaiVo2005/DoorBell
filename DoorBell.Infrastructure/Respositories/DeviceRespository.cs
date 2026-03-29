@@ -34,6 +34,13 @@ namespace DoorBell.Infrastructure.Respositories
             return await _context.Devices.FirstOrDefaultAsync(d => d.ParentDeviceId == parentId);
         }
 
+        public async Task<bool> AnyRootCameraHasPeople(Guid userId)
+        {
+            return await _context.Devices
+            .Where(d => d.UserId == userId && d.Type == "camera")
+            .AnyAsync(d => d.HasPeople == true);
+        }
+
         public async Task<List<Device>> GetByApiKey(string apikey)
         {
             return await _context.Devices.Where(d => d.ApiKey == apikey).ToListAsync();
