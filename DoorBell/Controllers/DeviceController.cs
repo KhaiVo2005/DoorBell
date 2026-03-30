@@ -9,7 +9,6 @@ namespace DoorBell.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class DeviceController : ControllerBase
     {
         GetAllByUserUsecase _getAllByUser;

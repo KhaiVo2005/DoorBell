@@ -9,12 +9,12 @@ namespace DoorBell.Application.DTOs.DeviceDTOs
 {
     public class CreateDTO
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public string Type { get; set; }
         public string? ParentDeviceId { get; set; }
         public string ApiKey { get; set; }
         public string? IPAddress { get; set; }
-        public string Location { get; set; }
+        public string? Location { get; set; }
         public string Status { get; set; }
         public bool? HasPeople { get; set; }
         public Guid UserId { get; set; }
