@@ -3,6 +3,7 @@ using DoorBell.Application.Hubs;
 using DoorBell.Application.Interfaces;
 using DoorBell.Application.Mapping;
 using DoorBell.Application.Services;
+using DoorBell.Application.Usecases;
 using DoorBell.Application.Usecases.CameraUsecase;
 using DoorBell.Application.Usecases.UserUsecase;
 using DoorBell.Domain.Entities;
@@ -146,6 +147,22 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseWebSockets();
+
+app.Map("/audio/{roomId}", async context =>
+{
+    if (!context.WebSockets.IsWebSocketRequest)
+    {
+        context.Response.StatusCode = 400;
+        return;
+    }
+
+    var roomId = context.Request.RouteValues["roomId"]?.ToString();
+    var socket = await context.WebSockets.AcceptWebSocketAsync();
+
+    await AudioRoomManager.HandleConnection(roomId, socket);
+});
 
 app.MapControllers();
 

@@ -16,5 +16,10 @@ namespace DoorBell.Application.Hubs
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, deviceId);
         }
+
+        public async Task JoinRoom(string roomId)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
+        }
     }
 }

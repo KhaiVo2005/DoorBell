@@ -36,7 +36,7 @@ namespace DoorBell.Application.Usecases.CallSessionUsecase
 
             await _call.Update(callSession);
 
-            await _hub.Clients.User(callSession.UserId.ToString())
+            await _hub.Clients.User(callSession.DeviceId.ToString())
                 .SendAsync("CallRejected", new
                 {
                     CallSessionId = callSession.Id

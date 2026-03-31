@@ -55,7 +55,7 @@ namespace DoorBell.Application.Usecases.DoorBellEventUsecase
                     .SendAsync("IncomingCall", new
                     {
                         CallSessionId = createdCall.Id,
-                        DeviceId = device.Id,
+                        DeviceId = device.ApiKey,
                         Time = createdCall.StartTime
                     });
             }

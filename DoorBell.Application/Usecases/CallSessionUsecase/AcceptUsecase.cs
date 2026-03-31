@@ -39,9 +39,10 @@ namespace DoorBell.Application.Usecases.CallSessionUsecase
             await _call.Update(callSession);
 
             await _hub.Clients.User(callSession.UserId.ToString())
-                .SendAsync("CallRejected", new
+                .SendAsync("CallAccept", new
                 {
-                    CallSessionId = callSession.Id
+                    CallSessionId = callSession.Id,
+                    RoomId = callSession.Id.ToString()
                 });
 
             return _mapper.Map<GetDTO>(callSession);
