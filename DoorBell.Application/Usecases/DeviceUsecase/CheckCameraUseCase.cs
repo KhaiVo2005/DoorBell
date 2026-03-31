@@ -1,4 +1,5 @@
 ﻿using DoorBell.Application.Interfaces;
+using DoorBell.Application.Usecases.DoorBellEventUsecase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace DoorBell.Application.Usecases.DeviceUsecase
     public class CheckCameraUseCase
     {
         IDevice _deviceRepository;
-        IDoorBellEvent _doorbellEvent;
+        DoorBellEventUsecase.CreateUsecase _doorbellEvent;
 
-        public CheckCameraUseCase(IDevice deviceRepository, IDoorBellEvent doorbellEvent)
+        public CheckCameraUseCase(IDevice deviceRepository, DoorBellEventUsecase.CreateUsecase doorbellEvent)
         {
             _deviceRepository = deviceRepository;
             _doorbellEvent = doorbellEvent;
@@ -31,9 +32,8 @@ namespace DoorBell.Application.Usecases.DeviceUsecase
 
             if(!hasCamera)
             {
-                var createEvent = await _doorbellEvent.Create(new Domain.Entities.DoorBellEvent
+                var createEvent = await _doorbellEvent.Execute(new Application.DTOs.DoorBellEventDTOs.CreateDTO
                 {
-                    Id = Guid.NewGuid(),
                     DeviceId = devices.First().Id,
                     EventType = "isringing",
                     Timestamp = DateTime.UtcNow,
