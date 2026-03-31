@@ -12,20 +12,14 @@ namespace DoorBell.API.Controllers
         DetectUsecase _detectUsecase;
         DetectPersonUsecase _detectPersonUsecase;
         CheckCameraUseCase _checkPress;
-        Application.Usecases.DoorBellEventUsecase.CreateUsecase _createUsecase;
-        GetByApiKeyUsecase _getDeviceByApiKeyUsecase;
         public CameraController(
             DetectUsecase detectUsecase, 
             DetectPersonUsecase detectPersonUsecase,
-            CheckCameraUseCase checkCameraUseCase,
-            Application.Usecases.DoorBellEventUsecase.CreateUsecase createUsecase,
-            GetByApiKeyUsecase getDeviceByApiKeyUsecase)
+            CheckCameraUseCase checkCameraUseCase)
         {
             _detectUsecase = detectUsecase;
             _detectPersonUsecase = detectPersonUsecase;
             _checkPress = checkCameraUseCase;
-            _createUsecase = createUsecase;
-            _getDeviceByApiKeyUsecase = getDeviceByApiKeyUsecase;
         }
 
         [HttpPost("detect")]
@@ -56,15 +50,6 @@ namespace DoorBell.API.Controllers
         [HttpPost("press")]
         public async Task<bool> Press([FromBody] string apiKey)
         {
-            var device = await _getDeviceByApiKeyUsecase.Execute(apiKey);
-            _createUsecase.Execute(new DoorBell.Application.DTOs.DoorBellEventDTOs.CreateDTO
-            {
-                DeviceId = device.First().Id,
-                EventType = "isringing",
-                Timestamp = DateTime.UtcNow,
-                IsView = false,
-                ImageUrl = null
-            });
             return await _checkPress.Execute(apiKey);
         }
     }
